@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id" x-data="orderApp()" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixeloid - Jasa Kreatif</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    /* Background Gradient Animasi */
+    body {
+      background: linear-gradient(-45deg, #4f46e5, #3b82f6, #60a5fa, #6366f1);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Animasi Card Hover */
+    .card-hover {
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="text-gray-800 font-sans">
+
+  <!-- ========== HERO HEADER ========== -->
+  <header class="bg-white/20 backdrop-blur-md text-white text-center py-12 shadow-lg">
+    <img src="logo.jpg" alt="Pixeloid Logo" 
+         class="w-24 mx-auto rounded-full border-4 border-white shadow-md mb-4 hover:scale-105 transition-transform duration-300">
+    <h1 class="text-4xl font-extrabold tracking-wide">Pixeloid</h1>
+    <p class="text-sm opacity-90">Jasa Joki Tugas • Desain Website • Poster</p>
+  </header>
+
+  <!-- ========== SECTION KEUNGGULAN ========== -->
+  <section class="max-w-3xl mx-auto my-12 bg-white/90 shadow-lg rounded-2xl p-8 text-center card-hover">
+    <h2 class="text-3xl font-semibold text-indigo-600 mb-4">Kenapa Pilih Pixeloid?</h2>
+    <p class="text-gray-700 leading-relaxed text-lg">
+      Pixeloid hadir untuk bantu siswa SMA menyelesaikan tugas dan kebutuhan desain 
+      dengan cepat, rapi, dan terpercaya. Kami mengutamakan kualitas, ketepatan waktu, 
+      serta harga yang bersahabat. Dengan tim kreatif dan berpengalaman, setiap pesanan 
+      akan dikerjakan sesuai permintaan sehingga hasilnya memuaskan.
+    </p>
+  </section>
+
+  <!-- ========== SECTION FORM ORDER ========== -->
+  <section class="max-w-xl mx-auto my-12 bg-white/90 p-8 shadow-lg rounded-2xl card-hover">
+    <h2 class="text-2xl font-bold text-center text-indigo-600 mb-6">Form Order</h2>
+    <form @submit.prevent="submitOrder" class="space-y-4">
+      <input type="text" placeholder="Nama lengkap" x-model="nama" required
+        class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition">
+      <input type="text" placeholder="Kelas (contoh: XII RPL 4)" x-model="kelas" required
+        class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition">
+      <select x-model="jasa" required
+        class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition">
+        <option value="">Pilih Jasa</option>
+        <option value="Joki Tugas">Joki Tugas</option>
+        <option value="Desain Website">Desain Website</option>
+        <option value="Poster">Poster</option>
+      </select>
+      <textarea rows="4" placeholder="Detail pesanan..." x-model="detail" required
+        class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition"></textarea>
+      <button type="submit"
+        class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">
+        Kirim via WhatsApp
+      </button>
+    </form>
+  </section>
+
+  <!-- ========== SECTION PROJEK KETUA ========== -->
+  <section class="max-w-xl mx-auto my-12 bg-white/90 p-8 shadow-lg rounded-2xl text-center card-hover">
+    <h2 class="text-2xl font-bold text-indigo-600 mb-4">Projek Ketua</h2>
+    <p class="text-gray-700 font-medium">Ini aja projek Leader nya, ada lagi ga??</p>
+    <p class="text-indigo-600 font-semibold">Ada dong, mampir kan Lee 😎</p>
+    <a href="https://github.com/LeaderPixeloid" target="_blank"
+       class="inline-block mt-4 px-6 py-2 bg-gray-900 text-white rounded-lg shadow-md hover:bg-gray-800 transition">
+      🔗 Lihat GitHub Leader
+    </a>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="mt-12 bg-white/20 backdrop-blur-md text-white text-center py-6">
+    <p>&copy; 2025 Pixeloid. All Rights Reserved.</p>
+    <p class="text-sm opacity-80">Dibuat dengan ❤️ oleh Team Leader dan Leader Team Produksi Pixeloid</p>
+  </footer>
+
+  <script>
+    function orderApp() {
+      return {
+        nama: '',
+        kelas: '',
+        jasa: '',
+        detail: '',
+        nomorWA: '62895395005375',
+
+        validate() {
+          if (this.nama.length < 3) {
+            alert("Nama minimal 3 huruf!");
+            return false;
+          }
+          if (!/^(X|XI|XII)\s+\w+/i.test(this.kelas)) {
+            alert("Format kelas tidak valid! Contoh: XI IPA 2");
+            return false;
+          }
+          if (!this.jasa) {
+            alert("Silakan pilih jasa!");
+            return false;
+          }
+          if (this.detail.length < 10) {
+            alert("Detail pesanan minimal 10 karakter!");
+            return false;
+          }
+          return true;
+        },
+
+        submitOrder() {
+          if (!this.validate()) return;
+
+          let pesan = `Halo Pixeloid!%0ASaya mau order:%0A- Nama: ${this.nama}%0A- Kelas: ${this.kelas}%0A- Jasa: ${this.jasa}%0A- Detail: ${this.detail}`;
+          window.open(`https://wa.me/${this.nomorWA}?text=${pesan}`, "_blank");
+        }
+      }
+    }
+  </script>
+</body>
+</html>
