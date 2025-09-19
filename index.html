@@ -341,12 +341,7 @@
             }
           },
 
-          previewFile(event) {
-            const file = event.target.files[0];
-            if (file) {
-              this.buktiPreview = URL.createObjectURL(file);
-            }
-          },
+           
 
           validate() {
             if (this.nama.length < 3) {
@@ -365,10 +360,7 @@
               alert("Detail pesanan minimal 10 karakter!");
               return false;
             }
-            if (!this.buktiPreview) {
-              alert("Harap upload bukti pembayaran!");
-              return false;
-            }
+        
             return true;
           },
 
