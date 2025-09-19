@@ -6,6 +6,7 @@
     <title>Pixeloid - Jasa Kreatif</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
+    <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
     <style>
       body {
         background: linear-gradient(-45deg, #4f46e5, #3b82f6, #60a5fa, #6366f1);
@@ -13,15 +14,9 @@
         animation: gradientBG 12s ease infinite;
       }
       @keyframes gradientBG {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
       .card-hover {
         transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -69,6 +64,15 @@
           type="text"
           placeholder="Kelas (contoh: XII RPL 4)"
           x-model="kelas"
+          required
+          class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition"
+        />
+
+        <!-- Input Asal Sekolah -->
+        <input
+          type="text"
+          placeholder="Asal Sekolah (contoh: SMK TI Bali Global)"
+          x-model="asalSekolah"
           required
           class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition"
         />
@@ -154,28 +158,6 @@
           required
           class="w-full p-3 border rounded-lg focus:ring-4 focus:ring-indigo-400 transition"
         ></textarea>
-
-        <!-- Upload Bukti Pembayaran -->
-        <!-- <div>
-          <label class="block font-semibold text-gray-700 mb-2"
-            >Upload Bukti Pembayaran</label
-          >
-          <input
-            type="file"
-            accept="image/*"
-            @change="previewFile"
-            required
-            class="w-full p-2 border rounded-lg bg-white focus:ring-2 focus:ring-indigo-400"
-          />
-          <template x-if="buktiPreview">
-            <img
-              :src="buktiPreview"
-              alt="Bukti Pembayaran"
-              class="mt-4 w-48 rounded-lg shadow-md mx-auto"
-            />
-          </template>
-        </div> -->
-
         <button
           type="submit"
           class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:-translate-y-1"
@@ -183,54 +165,6 @@
           Kirim via WhatsApp
         </button>
       </form>
-    </section>
-
-    <!-- PROJEK LEADER -->
-    <section
-      class="max-w-xl mx-auto my-12 bg-white/90 p-8 shadow-lg rounded-2xl text-center card-hover"
-    >
-      <h2 class="text-2xl font-bold text-indigo-600 mb-4">Projek Leader</h2>
-      <p class="text-gray-700 font-medium">
-        Ini aja projek Leader nya, ada lagi ga??
-      </p>
-      <p class="text-indigo-600 font-semibold">Ada dong, mampir kan Lee 😎</p>
-      <a
-        href="https://github.com/LeaderPixeloid"
-        target="_blank"
-        class="inline-block mt-4 px-6 py-2 bg-gray-900 text-white rounded-lg shadow-md hover:bg-gray-800 transition"
-      >
-        🔗 Lihat GitHub Leader
-      </a>
-    </section>
-
-    <!-- SOSMED -->
-    <section
-      class="max-w-xl mx-auto my-12 bg-white/90 p-8 shadow-lg rounded-2xl text-center card-hover"
-    >
-      <h2 class="text-2xl font-bold text-indigo-600 mb-4">Ikuti Kami</h2>
-      <p class="text-gray-700 mb-6">
-        Jangan lupa follow sosmed Pixeloid biar selalu update ✨
-      </p>
-      <div class="flex justify-center gap-6 text-gray-600">
-        <a
-          href="https://instagram.com/"
-          target="_blank"
-          class="p-3 bg-pink-500 text-white rounded-full hover:scale-110 transition transform shadow-lg"
-          >📷</a
-        >
-        <a
-          href="https://tiktok.com/"
-          target="_blank"
-          class="p-3 bg-black text-white rounded-full hover:scale-110 transition transform shadow-lg"
-          >🎵</a
-        >
-        <a
-          href="https://discord.com/"
-          target="_blank"
-          class="p-3 bg-indigo-600 text-white rounded-full hover:scale-110 transition transform shadow-lg"
-          >💬</a
-        >
-      </div>
     </section>
 
     <!-- FOOTER -->
@@ -249,99 +183,41 @@
         return {
           nama: "",
           kelas: "",
+          asalSekolah: "",
           mapel: "",
           defaultDiff: "",
           detail: "",
-          buktiPreview: null,
           nomorWA: "62895395005375",
 
-          // Deskripsi mapel + default difficulty
           mapelDeskripsi: {
-            inggris: {
-              Easy: "Grammar dasar dan kosakata umum.",
-              Medium: "Reading comprehension dan tenses kompleks.",
-              Hard: "Essay writing, idioms, academic writing.",
-            },
-            indonesia: {
-              Easy: "Membaca teks, tata bahasa dasar.",
-              Medium: "Analisis teks sastra.",
-              Hard: "Kritik sastra dan analisis mendalam.",
-            },
-            sejarah: {
-              Easy: "Peristiwa umum sejarah nasional.",
-              Medium: "Sejarah dunia dan perang besar.",
-              Hard: "Analisis dokumen sejarah.",
-            },
-            seni: {
-              Easy: "Menggambar dan seni dasar.",
-              Medium: "Teori seni.",
-              Hard: "Analisis karya seni.",
-            },
-            agama: {
-              Easy: "Pelajaran doa dan ibadah dasar.",
-              Medium: "Sejarah agama.",
-              Hard: "Kajian kitab.",
-            },
-            bali: {
-              Easy: "Kosakata dasar bahasa Bali.",
-              Medium: "Tata bahasa menengah.",
-              Hard: "Sastra Bali klasik.",
-            },
-            pkn: {
-              Easy: "Hak dan kewajiban dasar.",
-              Medium: "UUD 1945, sistem pemerintahan.",
-              Hard: "Analisis hukum dan politik.",
-            },
-            ips: {
-              Easy: "Geografi dasar.",
-              Medium: "Ekonomi menengah.",
-              Hard: "Analisis sosial budaya.",
-            },
-            matematika: {
-              Easy: "Aljabar sederhana.",
-              Medium: "Persamaan kuadrat dan trigonometri.",
-              Hard: "Integral, turunan, olimpiade.",
-            },
-            ipa: {
-              Easy: "Biologi dasar.",
-              Medium: "Kimia menengah.",
-              Hard: "Fisika modern dan kuantum.",
-            },
-            pkkwu: {
-              Easy: "Konsep dasar kewirausahaan.",
-              Medium: "Rencana bisnis.",
-              Hard: "Manajemen keuangan dan analisis pasar.",
-            },
-            desain: {
-              Easy: "Poster sederhana.",
-              Medium: "UI/UX dasar.",
-              Hard: "Branding dan desain kompleks.",
-            },
+            inggris: { Easy: "Grammar dasar dan kosakata umum." },
+            indonesia: { Easy: "Membaca teks, tata bahasa dasar." },
+            sejarah: { Easy: "Peristiwa umum sejarah nasional." },
+            seni: { Easy: "Menggambar dan seni dasar." },
+            agama: { Easy: "Pelajaran doa dan ibadah dasar." },
+            bali: { Medium: "Tata bahasa menengah." },
+            pkn: { Medium: "UUD 1945, sistem pemerintahan." },
+            ips: { Medium: "Ekonomi menengah." },
+            matematika: { Hard: "Integral, turunan, olimpiade." },
+            ipa: { Hard: "Fisika modern dan kuantum." },
+            pkkwu: { Hard: "Manajemen keuangan dan analisis pasar." },
+            desain: { Hard: "Branding dan desain kompleks." },
             fleksibel: {
               fleksibel: "Bisa berupa Proposal, PPT, atau dokumen ringan sesuai kebutuhan.",
-          },
+            },
           },
 
-          // Atur default difficulty per mapel
           setDefaultDiff() {
-            if (
-              ["inggris", "indonesia", "sejarah", "seni", "agama"].includes(
-                this.mapel
-              )
-            ) {
+            if (["inggris","indonesia","sejarah","seni","agama"].includes(this.mapel)) {
               this.defaultDiff = "Easy";
-            } else if (["bali", "pkn", "ips"].includes(this.mapel)) {
+            } else if (["bali","pkn","ips"].includes(this.mapel)) {
               this.defaultDiff = "Medium";
-            } else if (
-              ["matematika", "ipa", "pkkwu", "desain"].includes(this.mapel)
-            ) {
+            } else if (["matematika","ipa","pkkwu","desain"].includes(this.mapel)) {
               this.defaultDiff = "Hard";
             } else if (this.mapel === "fleksibel") {
               this.defaultDiff = "fleksibel";
             }
           },
-
-           
 
           validate() {
             if (this.nama.length < 3) {
@@ -352,6 +228,10 @@
               alert("Format kelas tidak valid! Contoh: XI IPA 2");
               return false;
             }
+            if (!this.asalSekolah) {
+              alert("Silakan isi asal sekolah!");
+              return false;
+            }
             if (!this.mapel) {
               alert("Silakan pilih mata pelajaran!");
               return false;
@@ -360,14 +240,13 @@
               alert("Detail pesanan minimal 10 karakter!");
               return false;
             }
-        
             return true;
           },
 
           submitOrder() {
             if (!this.validate()) return;
 
-            let pesan = `Halo Pixeloid!\nSaya mau order:\n- Nama: ${this.nama}\n- Kelas: ${this.kelas}\n- Mapel: ${this.mapel}\n- Difficulty: ${this.defaultDiff}\n- Detail: ${this.detail}\n\n(Silakan kirim bukti pembayaran di WhatsApp)`;
+            let pesan = `Halo Pixeloid!\nSaya mau order:\n- Nama: ${this.nama}\n- Kelas: ${this.kelas}\n- Asal Sekolah: ${this.asalSekolah}\n- Mapel: ${this.mapel}\n- Difficulty: ${this.defaultDiff}\n- Detail: ${this.detail}\n\n(Silakan kirim bukti pembayaran di WhatsApp)`;
 
             alert("Pesan yang akan dikirim ke WhatsApp:\n\n" + pesan);
 
